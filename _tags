@@ -1,0 +1,28 @@
+# OASIS_START
+# DO NOT EDIT (digest: cbe3a0725caee82021ecd3b7b34326fd)
+# Ignore VCS directories, you can use the same kind of rule outside 
+# OASIS_START/STOP if you want to exclude directories that contains 
+# useless stuff for the build process
+<**/.svn>: -traverse
+<**/.svn>: not_hygienic
+".bzr": -traverse
+".bzr": not_hygienic
+".hg": -traverse
+".hg": not_hygienic
+".git": -traverse
+".git": not_hygienic
+"_darcs": -traverse
+"_darcs": not_hygienic
+# Library ipset
+"lib/ipset.cmxs": use_ipset
+<lib/*.ml{,i}>: oasis_library_ipset_ccopt
+"lib/ipset_stubs.c": oasis_library_ipset_ccopt
+<lib/ipset.{cma,cmxa}>: oasis_library_ipset_cclib
+"lib/libipset_stubs.lib": oasis_library_ipset_cclib
+"lib/dllipset_stubs.dll": oasis_library_ipset_cclib
+"lib/libipset_stubs.a": oasis_library_ipset_cclib
+"lib/dllipset_stubs.so": oasis_library_ipset_cclib
+<lib/ipset.{cma,cmxa}>: use_libipset_stubs
+<lib/*.ml{,i}>: pkg_uint.uint64
+"lib/ipset_stubs.c": pkg_uint.uint64
+# OASIS_STOP

@@ -1,0 +1,34 @@
+OASISFormat: 0.3
+Name:        ipset
+Version:     1.0.0
+Synopsis:    OCaml libipset bindings
+Authors:     Andre Nathan
+License:     MIT
+
+BuildTools:  ocamlbuild
+Plugins:     META (0.3)
+
+Library "ipset"
+  Path:            lib
+  BuildTools:      ocamlbuild
+  BuildDepends:    uint.uint64 (>= 1.0.1)
+  CompiledObject:  best
+  Modules:         Ipset
+  CSources:        ipset_stubs.c
+  CCLib:           -lipset
+  CCOpt:           -Wall -Werror
+
+Document "ipset"
+  Title:                Ipset documentation
+  Type:                 ocamlbuild (0.3)
+  BuildTools+:          ocamldoc
+  XOCamlbuildPath:      lib
+  XOCamlbuildLibraries: ipset
+
+#Executable "test_ipset"
+#  Path:            lib_test
+#  MainIs:          test_ipset.ml
+#  Install:         false
+#  CompiledObject:  best
+#  BuildDepends:    ipset,
+#                   unix
