@@ -64,29 +64,6 @@ caml_ipset_session_fini(value ml_session)
     CAMLreturn(Val_unit);
 }
 
-static const int ipset_command_table[] = {
-    IPSET_CMD_PROTOCOL,
-    IPSET_CMD_CREATE, //
-    IPSET_CMD_DESTROY, //
-    IPSET_CMD_FLUSH, //
-    IPSET_CMD_RENAME, //
-    IPSET_CMD_SWAP, //
-    IPSET_CMD_LIST, //
-    IPSET_CMD_SAVE, //
-    IPSET_CMD_ADD, //
-    IPSET_CMD_DEL, //
-    IPSET_CMD_TEST, //
-    IPSET_CMD_HEADER,
-    IPSET_CMD_TYPE,
-    IPSET_CMD_COMMIT,
-};
-
-static inline int
-Command_val(ml_cmd)
-{
-    return ipset_command_table[Int_val(ml_cmd)];
-}
-
 static void
 check_netmask(struct ipset_session *session, uint8_t netmask)
 {
