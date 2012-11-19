@@ -1,8 +1,7 @@
 # OASIS_START
-# DO NOT EDIT (digest: feda30f18f2f663843b8fc80f4eb775b)
+# DO NOT EDIT (digest: 8360024033b0be333510da5f0ecd68d2)
 version = "1.0.0"
 description = "OCaml libipset bindings"
-requires = "uint.uint64"
 archive(byte) = "ipset.cma"
 archive(byte, plugin) = "ipset.cma"
 archive(native) = "ipset.cmxa"

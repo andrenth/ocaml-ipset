@@ -1,5 +1,5 @@
 (* OASIS_START *)
-(* DO NOT EDIT (digest: dd966a4f0cf12a714dcf836efe981cbc) *)
+(* DO NOT EDIT (digest: c8f93f47b926864f44313447672e8b78) *)
 module OASISGettext = struct
 # 21 "/home/andre/src/oasis-0.3.0/src/oasis/OASISGettext.ml"
 
@@ -491,7 +491,7 @@ let package_default =
           (["oasis_library_ipset_cclib"; "ocamlmklib"; "c"],
             [(OASISExpr.EBool true, S [A "-lipset"])])
        ];
-     includes = [];
+     includes = [("lib_test", ["lib"])];
      }
   ;;
 

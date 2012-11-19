@@ -45,8 +45,6 @@ type set
 
 exception Ipset_error of string
 
-let _ = Callback.register_exception "Ipset.Ipset_error" (Ipset_error "")
-
 external load_types : unit -> unit = "caml_ipset_load_types"
 external init_session : unit -> session = "caml_ipset_session_init"
 external finish_session : session -> unit = "caml_ipset_session_fini"
