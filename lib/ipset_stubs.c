@@ -69,8 +69,8 @@ static const int ipset_command_table[] = {
     IPSET_CMD_CREATE, //
     IPSET_CMD_DESTROY, //
     IPSET_CMD_FLUSH, //
-    IPSET_CMD_RENAME,
-    IPSET_CMD_SWAP,
+    IPSET_CMD_RENAME, //
+    IPSET_CMD_SWAP, //
     IPSET_CMD_LIST, //
     IPSET_CMD_SAVE, //
     IPSET_CMD_ADD, //
@@ -399,4 +399,44 @@ caml_ipset_test(value ml_session, value ml_set, value ml_entry)
     cmd_with_set_and_entry(ml_session, ml_set, ml_entry, IPSET_CMD_TEST);
     r = ipset_cmd(session, IPSET_CMD_TEST, 0);
     CAMLreturn(r == 0 ? Val_true : Val_false);
+}
+
+static void
+cmd_with_two_sets(value ml_session, value ml_oldname, value ml_newname,
+                  int cmd)
+{
+    CAMLparam3(ml_session, ml_oldname, ml_newname);
+    int r;
+    struct ipset_session *session = (struct ipset_session *)ml_session;
+    char *oldname = String_val(ml_oldname);
+    char *newname = String_val(ml_newname);
+
+    r = ipset_parse_setname(session, IPSET_SETNAME, oldname);
+    if (r < 0)
+        ipset_error(session, NULL);
+    r = ipset_parse_setname(session, IPSET_OPT_SETNAME2, newname);
+    if (r < 0)
+        ipset_error(session, NULL);
+
+    r = ipset_cmd(session, cmd, 0);
+    if (r < 0)
+        ipset_error(session, NULL);
+
+    CAMLreturn0;
+}
+
+CAMLprim value
+caml_ipset_rename(value ml_session, value ml_oldname, value ml_newname)
+{
+    CAMLparam3(ml_session, ml_oldname, ml_newname);
+    cmd_with_two_sets(ml_session, ml_oldname, ml_newname, IPSET_CMD_RENAME);
+    CAMLreturn(Val_unit);
+}
+
+CAMLprim value
+caml_ipset_swap(value ml_session, value ml_oldname, value ml_newname)
+{
+    CAMLparam3(ml_session, ml_oldname, ml_newname);
+    cmd_with_two_sets(ml_session, ml_oldname, ml_newname, IPSET_CMD_SWAP);
+    CAMLreturn(Val_unit);
 }

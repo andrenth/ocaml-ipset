@@ -58,3 +58,5 @@ external add : session -> string -> string -> float option -> unit
   = "caml_ipset_add"
 external del : session -> string -> string -> unit = "caml_ipset_del"
 external test : session -> string -> string -> bool = "caml_ipset_test"
+external rename : session -> string -> string -> unit = "caml_ipset_rename"
+external swap : session -> string -> string -> unit = "caml_ipset_swap"
