@@ -45,10 +45,11 @@ type set
 
 exception Ipset_error of string
 
-let _ = Callback.register_exception "Ipset.Ipset_error" (Ipset_error "")
+let () =
+  Callback.register_exception "Ipset.Ipset_error" (Ipset_error "")
 
 external load_types : unit -> unit = "caml_ipset_load_types"
-external init_session : unit -> session = "caml_ipset_session_init"
+external stub_init_session : unit -> session = "caml_ipset_session_init"
 external finish_session : session -> unit = "caml_ipset_session_fini"
 external create : session -> string -> set -> float option -> unit
   = "caml_ipset_create"
@@ -62,3 +63,6 @@ external del : session -> string -> string -> unit = "caml_ipset_del"
 external test : session -> string -> string -> bool = "caml_ipset_test"
 external rename : session -> string -> string -> unit = "caml_ipset_rename"
 external swap : session -> string -> string -> unit = "caml_ipset_swap"
+
+let init_session () =
+  stub_init_session ()

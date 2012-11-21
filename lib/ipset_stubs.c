@@ -31,9 +31,7 @@ ipset_error(struct ipset_session *session, char *err)
                 err[last] = '\0';
         }
     }
-    // XXX weird caml_named_value() returns NULL?!
-    caml_failwith(err);
-    //caml_raise_with_string(*caml_named_value("Ipset.Ipset_error"), err);
+    caml_raise_with_string(*caml_named_value("Ipset.Ipset_error"), err);
 }
 
 CAMLprim value
