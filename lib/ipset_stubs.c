@@ -31,6 +31,7 @@ ipset_error(struct ipset_session *session, char *err)
                 err[last] = '\0';
         }
     }
+    ipset_session_fini(session);
     caml_raise_with_string(*caml_named_value("Ipset.Ipset_error"), err);
 }
 
