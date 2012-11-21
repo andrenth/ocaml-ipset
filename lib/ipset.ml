@@ -66,3 +66,7 @@ external swap : session -> string -> string -> unit = "caml_ipset_swap"
 
 let init_session () =
   stub_init_session ()
+
+let init () =
+  load_types ();
+  stub_init_session ()

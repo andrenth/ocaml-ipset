@@ -61,3 +61,5 @@ external rename : session -> string -> string -> unit = "caml_ipset_rename"
 external swap : session -> string -> string -> unit = "caml_ipset_swap"
 
 val init_session : unit -> session
+
+val init : unit -> session
