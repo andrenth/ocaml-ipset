@@ -19,12 +19,17 @@ void ipset_port_usage(void) { }
 #define Val_none    Val_int(0)
 
 static void
-ipset_error(struct ipset_session *session, const char *err)
+ipset_error(struct ipset_session *session, char *err)
 {
     if (err == NULL) {
-        err = ipset_session_error(session);
-        if (err == NULL)
+        err = (char *)ipset_session_error(session);
+        if (err == NULL) {
             err = "unknown error";
+        } else {
+            size_t last = strlen(err) - 1;
+            if (err[last] == '\n')
+                err[last] = '\0';
+        }
     }
     // XXX weird caml_named_value() returns NULL?!
     caml_failwith(err);
