@@ -22,12 +22,12 @@ type family
   = Inet
   | Inet6
 
-type set_bitmap
+type bitmap_spec
   = Bitmap_ip of string * int option
   | Bitmap_ip_mac of string
   | Bitmap_port of string
 
-type set_hash
+type hash_spec
   = Hash_ip of family * int option * int option * int option
   | Hash_net of family * int option * int option
   | Hash_ip_port of family * int option * int option
@@ -35,19 +35,19 @@ type set_hash
   | Hash_ip_port_ip of family * int option * int option
   | Hash_ip_port_net of family * int option * int option
 
-type set_list
+type list_spec
   = List_set of int option
 
-type set
-  = Bitmap of set_bitmap
-  | Hash of set_hash
-  | List of set_list
+type spec
+  = Bitmap of bitmap_spec
+  | Hash of hash_spec
+  | List of list_spec
 
 exception Ipset_error of string
 
 external load_types : unit -> unit = "caml_ipset_load_types"
 external finish_session : session -> unit = "caml_ipset_session_fini"
-external create : session -> string -> set -> float option -> unit
+external create : session -> string -> spec -> float option -> unit
   = "caml_ipset_create"
 external destroy : session -> string -> unit = "caml_ipset_destroy"
 external flush : session -> string -> unit = "caml_ipset_flush"
