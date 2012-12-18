@@ -151,7 +151,10 @@ parse_hash(struct ipset_session *session, value ml_hash)
 {
     CAMLparam1(ml_hash);
     CAMLlocal3(ml_hashsize, ml_maxelem, ml_netmask);
+    int r;
     int family;
+    const char *typename;
+    const struct ipset_type *type;
 
     family = Family_val(session, Field(ml_hash, 0));
     ipset_session_data_set(session, IPSET_OPT_FAMILY, &family);
@@ -169,23 +172,41 @@ parse_hash(struct ipset_session *session, value ml_hash)
 
     switch (Tag_val(ml_hash)) {
     case 0: { /* Hash_ip */
+        typename = "hash:ip";
         ml_netmask = Field(ml_hash, 3);
         if (ml_netmask != Val_none) {
             uint8_t netmask = Int_val(Some_val(ml_netmask));
             check_netmask(session, netmask);
             ipset_session_data_set(session, IPSET_OPT_NETMASK, &netmask);
         }
+        break;
     }
     case 1: /* Hash_net */
+        typename = "hash:net";
+        break;
     case 2: /* Hash_ip_port */
+        typename = "hash:ip,port";
+        break;
     case 3: /* Hash_net_port */
+        typename = "hash:net,port";
+        break;
     case 4: /* Hash_ip_port_ip */
+        typename = "hash:ip,port,ip";
+        break;
     case 5: /* Hash_ip_port_net */
-        /* nothing */
+        typename = "hash:ip,port,net";
         break;
     default:
         ipset_error(session, "invalid hash");
     }
+
+    /* Set type */
+    r = ipset_parse_typename(session, IPSET_OPT_TYPENAME, typename);
+    if (r < 0)
+        ipset_error(session, NULL);
+    type = ipset_type_get(session, IPSET_CMD_CREATE);
+    if (type == NULL)
+        ipset_error(session, NULL);
 
     CAMLreturn0;
 }
